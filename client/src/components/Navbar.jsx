@@ -63,7 +63,10 @@ const Navbar = ({ setView }) => {
     <>
       <AppBar position="static" sx={{ backgroundColor: "#000066" }}>
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1, fontFamily: "'Poppins', sans-serif" }}
+          >
             Contact Manager
           </Typography>
           {isMobile ? (
