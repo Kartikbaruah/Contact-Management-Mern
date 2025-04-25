@@ -30,6 +30,8 @@ const ContactForm = () => {
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ const ContactForm = () => {
       setError("Phone number must be at least 9 digits.");
       return;
     }
-
+    setLoading(true);
     try {
       await axios.post("/api/contacts", form);
       setForm({
@@ -52,6 +54,8 @@ const ContactForm = () => {
       setError("");
     } catch (err) {
       console.error("Error adding contact", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,10 +106,10 @@ const ContactForm = () => {
                 fullWidth
                 required
                 type="tel"
-                inputProps={{ maxLength: 15 }}
-                error={form.phone.length > 0 && form.phone.length < 9}
+                inputProps={{ maxLength: 10 }}
+                error={form.phone.length > 0 && form.phone.length < 10}
                 helperText={
-                  form.phone.length > 0 && form.phone.length < 9
+                  form.phone.length > 0 && form.phone.length < 10
                     ? "Phone number must be at least 9 digits"
                     : ""
                 }
@@ -127,6 +131,8 @@ const ContactForm = () => {
             type="submit"
             variant="contained"
             size="large"
+            loading={loading}
+            disabled={loading}
             sx={{
               backgroundColor: "#ff7961",
               "&:hover": {
@@ -134,9 +140,9 @@ const ContactForm = () => {
               },
             }}
           >
-            Add Contact
+            {loading ? "Adding..." : "Add Contact"}
           </Button>
-
+          
         </Stack>
       </form>
 
