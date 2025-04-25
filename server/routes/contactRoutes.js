@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// {Add a contact}
+// {Add contact}
 router.post('/', async (req, res) => {
   try {
     const { name, email, phone, address } = req.body;
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// {Delete a contact}
+// {Delete contact}
 router.delete('/:id', async (req, res) => {
   try {
     const deletedContact = await Contact.findByIdAndDelete(req.params.id);

@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import {
   TextField,
-  Button,
   Container,
   Stack,
   Snackbar,
@@ -11,6 +10,7 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 const countryCodes = [
   { code: "+91", label: "India" },
@@ -32,7 +32,6 @@ const ContactForm = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,6 +39,7 @@ const ContactForm = () => {
       setError("Phone number must be at least 9 digits.");
       return;
     }
+
     setLoading(true);
     try {
       await axios.post("/api/contacts", form);
@@ -86,7 +86,9 @@ const ContactForm = () => {
                 select
                 label="Country Code"
                 value={form.countryCode}
-                onChange={(e) => setForm({ ...form, countryCode: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, countryCode: e.target.value })
+                }
                 fullWidth
                 required
               >
@@ -102,7 +104,9 @@ const ContactForm = () => {
               <TextField
                 label="Phone Number"
                 value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, phone: e.target.value })
+                }
                 fullWidth
                 required
                 type="tel"
@@ -120,19 +124,20 @@ const ContactForm = () => {
           <TextField
             label="Address"
             value={form.address}
-            onChange={(e) => setForm({ ...form, address: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, address: e.target.value })
+            }
             multiline
             rows={3}
             fullWidth
             required
           />
 
-          <Button
+          <LoadingButton
             type="submit"
             variant="contained"
             size="large"
             loading={loading}
-            disabled={loading}
             sx={{
               backgroundColor: "#ff7961",
               "&:hover": {
@@ -140,9 +145,8 @@ const ContactForm = () => {
               },
             }}
           >
-            {loading ? "Adding..." : "Add Contact"}
-          </Button>
-          
+            Add Contact
+          </LoadingButton>
         </Stack>
       </form>
 

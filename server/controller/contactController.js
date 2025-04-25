@@ -47,6 +47,5 @@ const deleteContact = async (req, res) => {
 export {
   createContact,
   getAllContacts,
-  deleteContact,
-  updateContact // optional, remove if not used
+  deleteContact
 };

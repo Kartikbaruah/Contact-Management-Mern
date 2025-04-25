@@ -7,13 +7,21 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
 
   const fetchContacts = async () => {
-    const res = await axios.get("/api/contacts");
-    setContacts(res.data);
+    try {
+      const res = await axios.get("/api/contacts");
+      setContacts(res.data);
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+    }
   };
 
   const deleteContact = async (id) => {
-    await axios.delete(`/api/contacts/${id}`);
-    fetchContacts();
+    try {
+      await axios.delete(`/api/contacts/${id}`);
+      fetchContacts();
+    } catch (err) {
+      console.error("Error deleting contact:", err);
+    }
   };
 
   useEffect(() => {
