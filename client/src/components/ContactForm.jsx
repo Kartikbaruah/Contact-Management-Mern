@@ -35,8 +35,8 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.phone.length < 9) {
-      setError("Phone number must be at least 9 digits.");
+    if (form.phone.length < 10) {
+      setError("Phone number must be at least 10 digits.");
       return;
     }
 
