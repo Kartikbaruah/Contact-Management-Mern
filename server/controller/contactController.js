@@ -3,13 +3,15 @@ import Contact from '../models/Contact.js';
 // Create new contact
 const createContact = async (req, res) => {
   try {
-    const { name, email, phone, address } = req.body;
+    const { name, email, phone, address, designation} = req.body;
 
-    if (!name || !email || !phone || !address) {
+    console.log("Request Body:", req.body);
+
+    if (!name || !email || !phone || !address || !designation?.trim()) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    const newContact = new Contact({ name, email, phone, address });
+    const newContact = new Contact({ name, email, phone, address, designation });
     await newContact.save();
 
     return res.status(201).json(newContact);

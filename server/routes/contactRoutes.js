@@ -17,13 +17,13 @@ router.get('/', async (req, res) => {
 // {Add contact}
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, address } = req.body;
+    const { name, email, phone, address, designation } = req.body;
 
-    if (!name || !email || !phone || !address) {
+    if (!name || !email || !phone || !address || !designation) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    const newContact = new Contact({ name, email, phone, address });
+    const newContact = new Contact({ name, email, phone, address, designation });
     await newContact.save();
 
     res.status(201).json(newContact);

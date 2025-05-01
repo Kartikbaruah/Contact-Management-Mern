@@ -51,7 +51,7 @@ const ContactList = () => {
           >
             <ListItemText
               primary={`${contact.name} (${contact.phone})`}
-              secondary={`Email: ${contact.email} | Address: ${contact.address}`}
+              secondary={`Email: ${contact.email} | Designation: ${contact.designation} | Address: ${contact.address}`}
             />
           </ListItem>
         ))}

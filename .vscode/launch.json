@@ -1,0 +1,9 @@
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Debug Node.js Backend",
+  "program": "${workspaceFolder}/index.js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

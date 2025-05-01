@@ -23,17 +23,35 @@ const ContactForm = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    designation: "",
     phone: "",
     address: "",
-    countryCode: "+91",
+    countryCode: "+91"
   });
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [designationSuccess, setDesignationSuccess] = useState(false);
+  const [designationErrorAlert, setDesignationErrorAlert] = useState(false);
+
+  const handleDesignationChange = (e) => {
+    const value = e.target.value;
+    setForm({ ...form, designation: value });
+
+    if (value.trim() !== "") {
+      setDesignationSuccess(true);
+      setDesignationErrorAlert(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.designation) {
+      setDesignationErrorAlert(true);
+      return;
+    }
 
     if (form.phone.length < 10) {
       setError("Phone number must be at least 10 digits.");
@@ -46,6 +64,7 @@ const ContactForm = () => {
       setForm({
         name: "",
         email: "",
+        designation: "",
         phone: "",
         address: "",
         countryCode: "+91",
@@ -80,6 +99,19 @@ const ContactForm = () => {
             required
           />
 
+          <TextField
+            label="Designation"
+            value={form.designation}
+            onChange={handleDesignationChange}
+            onBlur={() => {
+              if (!form.designation.trim()) {
+                setDesignationErrorAlert(true);
+              }
+            }}
+            fullWidth
+            required
+          />
+
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
               <TextField
@@ -104,9 +136,7 @@ const ContactForm = () => {
               <TextField
                 label="Phone Number"
                 value={form.phone}
-                onChange={(e) =>
-                  setForm({ ...form, phone: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 fullWidth
                 required
                 type="tel"
@@ -124,9 +154,7 @@ const ContactForm = () => {
           <TextField
             label="Address"
             value={form.address}
-            onChange={(e) =>
-              setForm({ ...form, address: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, address: e.target.value })}
             multiline
             rows={3}
             fullWidth
@@ -150,7 +178,7 @@ const ContactForm = () => {
         </Stack>
       </form>
 
-      {/* Snackbar for Success */}
+      {/* Success Snackbar */}
       <Snackbar
         open={open}
         autoHideDuration={3000}
@@ -167,7 +195,41 @@ const ContactForm = () => {
         </Alert>
       </Snackbar>
 
-      {/* Error Alert */}
+      {/* Designation Filled Snackbar */}
+      <Snackbar
+        open={designationSuccess}
+        autoHideDuration={3000}
+        onClose={() => setDesignationSuccess(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setDesignationSuccess(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Designation is filled!
+        </Alert>
+      </Snackbar>
+
+      {/* Designation Missing Snackbar */}
+      <Snackbar
+        open={designationErrorAlert}
+        autoHideDuration={3000}
+        onClose={() => setDesignationErrorAlert(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setDesignationErrorAlert(false)}
+          severity="warning"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Designation is required!
+        </Alert>
+      </Snackbar>
+
+      {/* General Error */}
       {error && (
         <Box mt={2}>
           <Alert severity="error" onClose={() => setError("")}>
